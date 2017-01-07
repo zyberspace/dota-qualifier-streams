@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Oracle Qualifier Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://unpkg.com/rivets@0.9.6/dist/rivets.bundled.min.js" integrity="sha256-W79tvMHlloRixkQNrGjf2qz+nkjsuhRtV0N6duJOYnw=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="connection-info" rv-class-show="connecting">
+        <div class="connection-text">{ connectingType }, please wait...</div>
+        <div class="connection-indicator"></div>
+    </div>
+
+    <div class="page-viewers" rv-if="page-viewers">{ page-viewers } people connected</div>
+
+    <div class="streams">
+        <div class="stream" rv-each-stream="streams">
+            <div class="info">{ stream.info }</div>
+            <a class="pure-button pure-button-primary" rv-href="stream.url | https" target="_blank">
+                { stream.name } - { stream.url }
+            </a>
+            <div class="score">{ stream.score.0 }:{ stream.score.1 }</div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
