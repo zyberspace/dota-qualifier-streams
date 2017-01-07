@@ -2,9 +2,13 @@ rivets.formatters.https = function(value) {
     return "https://" + value;
 }
 
+var streamsIdToIndex = {},
+    streams = [];
+
 var view = rivets.bind(document.getElementsByTagName("body")[0], {
     "connecting": true,
-    "connectingType": "Connecting"
+    "connectingType": "Connecting",
+    "streams": streams
 });
 
 var listener = new EventSource("https://jewel.zyberware.org:3220/");
@@ -27,9 +31,16 @@ listener.onerror = function(event) {
 };
 
 listener.addEventListener("streams-update", function(event) {
-    view.update({
-        "streams": JSON.parse(event.data)
-    });
+    var updatedStreams = JSON.parse(event.data);
+    for (streamsId in updatedStreams) {
+        if (!streamsIdToIndex[streamsId]) {
+            streamsIdToIndex[streamsId] = streams.length;
+            streams.push(null);
+        }
+
+        //Update array values with splice so rivets recognizes them
+        streams.splice(streamsIdToIndex[streamsId], 1, updatedStreams[streamsId]);
+    }
 });
 
 listener.addEventListener("page-viewers-update", function(event) {

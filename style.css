@@ -52,6 +52,24 @@
     z-index: -1;
 }
 
+.region {
+    text-align: center;
+}
+.region > .title {
+    font-weight: bold;
+}
+.region > .no-streams {
+    display: none;
+    color: #444444;
+    font-style: italic;
+}
+.region > .no-streams:last-child {
+    display: block;
+}
+.region > .no-streams > .info {
+    white-space: pre-line;
+}
+
 .stream {
     display: block;
     position: relative;
@@ -61,7 +79,7 @@
     margin: 20px auto;
     text-align: center;
 
-    border: 1px solid black;
+    border: 1px solid;
     border-radius: 3px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
     background-color: #fff;

@@ -17,8 +17,13 @@
 
     <div class="page-viewers" rv-if="page-viewers">{ page-viewers } people connected</div>
 
-    <div class="streams">
-        <div class="stream" rv-each-stream="streams">
+    <div class="region" rv-each-region="streams">
+        <div class="title">{ region.title }</div>
+        <div class="stream no-streams">
+            <div class="info">{ region.noStreamsText }</div>
+        </div>
+
+        <div class="stream" rv-each-stream="region.streams">
             <div class="info">{ stream.info }</div>
             <a class="pure-button pure-button-primary" rv-href="stream.url | https" target="_blank">
                 { stream.name } - { stream.url }
