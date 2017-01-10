@@ -1,38 +1,39 @@
-rivets.formatters.https = function(value) {
-    return "https://" + value;
-}
+import view from "./view";
 
-var streamsIdToIndex = {},
+let streamsIdToIndex = {},
     streams = [];
 
-var view = rivets.bind(document.getElementsByTagName("body")[0], {
+//Set start values
+view.update({
     "connecting": true,
     "connectingType": "Connecting",
     "streams": streams
 });
 
-var listener = new EventSource("https://jewel.zyberware.org:3220/");
-listener.onopen = function(event) {
+//Initiate EventSource object
+const listener = new EventSource("https://jewel.zyberware.org:3220/");
+listener.onopen = event => {
     view.update({
         "connecting": false
     });
 
     //Wait till the connection bar is hidden before changing the text
-    setTimeout(function() {
+    setTimeout(() => {
         view.update({
             "connectingType": "Reconnecting" //Next time we need to connect it's a "reconnect"
         });
     }, 3000);
 };
-listener.onerror = function(event) {
+listener.onerror = event => {
     view.update({
         "connecting": true
     });
 };
 
-listener.addEventListener("streams-update", function(event) {
-    var updatedStreams = JSON.parse(event.data);
-    for (streamsId in updatedStreams) {
+//Add listeners for the events
+listener.addEventListener("streams-update", event => {
+    let updatedStreams = JSON.parse(event.data);
+    for (const streamsId in updatedStreams) {
         if (!streamsIdToIndex[streamsId]) {
             streamsIdToIndex[streamsId] = streams.length;
             streams.push(null);
@@ -43,7 +44,7 @@ listener.addEventListener("streams-update", function(event) {
     }
 });
 
-listener.addEventListener("page-viewers-update", function(event) {
+listener.addEventListener("page-viewers-update", event => {
     view.update({
         "page-viewers": event.data
     });
