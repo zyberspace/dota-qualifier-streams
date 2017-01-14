@@ -53,7 +53,7 @@ view.update({
     listener.addEventListener("streams-update", event => {
         let updatedStreams = JSON.parse(event.data);
         for (const streamsId in updatedStreams) {
-            if (!streamsIdToIndex[streamsId]) {
+            if (streamsIdToIndex[streamsId] === undefined) {
                 streamsIdToIndex[streamsId] = streams.length;
                 streams.push(null);
             }
