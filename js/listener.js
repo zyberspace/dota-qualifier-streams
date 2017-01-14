@@ -11,6 +11,15 @@ view.update({
 });
 
 (function createListener() {
+    //In case page / tab is not visible, wait till it is
+    if (document.hidden) {
+        document.addEventListener("visibilitychange", function eventListener() {
+            document.removeEventListener("visibilitychange", eventListener);
+            createListener();
+        });
+        return;
+    }
+
     //Initiate EventSource object
     let listener = new EventSource("https://jewel.zyberware.org:3220/");
 
