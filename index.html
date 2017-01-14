@@ -27,7 +27,7 @@
 
         <div class="stream" rv-each-stream="region.streams">
             <div class="info">{ stream.info }</div>
-            <a class="pure-button pure-button-primary" rv-href="stream.url | https" target="_blank">
+            <a rv-href="stream.url | https" target="_blank">
                 { stream.name } - { stream.url }
             </a>
             <div class="score">{ stream.score.0 }:{ stream.score.1 }</div>
