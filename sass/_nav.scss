@@ -1,0 +1,40 @@
+nav {
+    .page-viewers {
+        float: right;
+        padding: 3px;
+        font-size: 60%;
+        color: #444;
+    }
+
+    ul {
+        width: 90%;
+        max-width: 536px;
+        margin: 0px auto;
+        list-style: none;
+        padding: 5px 0px;
+
+        li {
+            display: inline;
+
+            &:not(:last-child):after {
+                content: " / ";
+                opacity: 0.3;
+            }
+
+            a {
+                color: #000;
+                white-space: nowrap;
+                opacity: 0.8;
+                transition: opacity 0.5s, text-shadow 0.1s;
+
+                &:hover, &:focus, &.selected {
+                    opacity: 1;
+                }
+
+                &.selected {
+                    text-shadow: 0px 0px 5px;
+                }
+            }
+        }
+    }
+}

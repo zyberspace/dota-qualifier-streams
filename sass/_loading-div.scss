@@ -1,0 +1,12 @@
+.loading-div {
+    display: flex;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: #fff;
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+}
