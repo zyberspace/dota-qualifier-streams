@@ -17,9 +17,10 @@
         <div class="connection-indicator"></div>
     </div>
 
+
     <div class="page-viewers" rv-if="page-viewers">{ page-viewers } people connected</div>
 
-    <div class="region" rv-each-region="streams">
+    <div class="region" rv-each-region="regions">
         <div class="title">{ region.title }</div>
         <div class="stream no-streams">
             <div class="info">{ region.noStreamsText }</div>

@@ -1,13 +1,12 @@
 import view from "./view";
 
-let streamsIdToIndex = {},
-    streams = [];
+let regions = [];
 
 //Set start values
 view.update({
     "connecting": true,
     "connectingType": "Connecting",
-    "streams": streams
+    "regions": regions
 });
 
 (function createListener() {
@@ -51,15 +50,23 @@ view.update({
 
     //Add listeners for the events
     listener.addEventListener("streams-update", event => {
-        let updatedStreams = JSON.parse(event.data);
-        for (const streamsId in updatedStreams) {
-            if (streamsIdToIndex[streamsId] === undefined) {
-                streamsIdToIndex[streamsId] = streams.length;
-                streams.push(null);
+        let updatedRegions = JSON.parse(event.data);
+        for (const regionId in updatedRegions) {
+            let updatedRegion = updatedRegions[regionId];
+            //Add id to region object
+            updatedRegion.id = regionId;
+
+            //Check if we already have a region with this id
+            let regionIndex = regions.findIndex(region => {
+                return region.id === updatedRegion.id;
+            });
+            if (regionIndex < 0) {
+                regionIndex = regions.length;
+                regions.push(null);
             }
 
             //Update array values with splice so rivets recognizes them
-            streams.splice(streamsIdToIndex[streamsId], 1, updatedStreams[streamsId]);
+            regions.splice(regionIndex, 1, updatedRegion);
         }
     });
 
