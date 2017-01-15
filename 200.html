@@ -18,9 +18,20 @@
     </div>
 
 
-    <div class="page-viewers" rv-if="page-viewers">{ page-viewers } people connected</div>
+    <nav>
+        <div class="page-viewers" rv-if="page-viewers">{ page-viewers } people connected</div>
+        <ul>
+            <li rv-each-region="regions">
+                <a rv-href="region.id" rv-data-region-id="region.id"
+                    rv-class-selected="regionSelected | equals region.id" rv-on-click="switchRegion">
+                    { region.title }
+                </a>
+            </li>
+        </ul>
+    </nav>
 
-    <div class="region" rv-each-region="regions">
+
+    <div class="region" rv-each-region="regions" rv-show="regionSelected | equals region.id">
         <div class="title">{ region.title }</div>
         <div class="stream no-streams">
             <div class="info">{ region.noStreamsText }</div>

@@ -1,6 +1,9 @@
 import view from "./view";
 
 let regions = [];
+export let hooks = {
+    onNewRegionId: null
+};
 
 //Set start values
 view.update({
@@ -63,6 +66,10 @@ view.update({
             if (regionIndex < 0) {
                 regionIndex = regions.length;
                 regions.push(null);
+
+                if (typeof hooks.onNewRegionId === "function") {
+                    hooks.onNewRegionId(regionId);
+                }
             }
 
             //Update array values with splice so rivets recognizes them
