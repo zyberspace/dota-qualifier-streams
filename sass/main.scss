@@ -130,50 +130,49 @@ nav {
             display: block;
         }
     }
-}
 
-.stream {
-    display: block;
-    position: relative;
-    left: -18px;
-    width: calc(90% - 36px);
-    max-width: 500px;
-    margin: 20px auto;
-    text-align: center;
+    .stream {
+        position: relative;
+        left: -18px;
+        width: calc(90% - 36px);
+        max-width: 500px;
+        margin: 20px auto;
+        text-align: center;
 
-    border: 1px solid;
-    border-radius: 3px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
-    background-color: #fff;
-
-    .info {
-        padding: 5px;
-    }
-
-    a {
-        display: block;
-        color: #fff;
-        background-color: #0078e7;
-        padding: 0.5em 1em;
-        border-radius: 0px 0px 2px 2px;
-
-        &:focus, &:hover {
-            background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.1));
-            outline: 0;
-        }
-    }
-
-    .score {
-        position: absolute;
-        top: 50%;
-        right: 0px;
-        width: 24px;
-        transform: translate(100%, -50%);
-        padding: 5px;
         border: 1px solid;
-        border-radius: 0px 5px 5px 0px;
-        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
-        z-index: -1;
-        background-color: inherit;
+        border-radius: 3px;
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+
+        .info {
+            padding: 5px;
+        }
+
+        a {
+            display: block;
+            color: #fff;
+            background-color: #0078e7;
+            padding: 0.5em 1em;
+            border-radius: 0px 0px 2px 2px;
+
+            &:focus, &:hover {
+                background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.1));
+                outline: 0;
+            }
+        }
+
+        .score {
+            position: absolute;
+            top: 50%;
+            right: 0px;
+            width: 24px;
+            transform: translate(100%, -50%);
+            padding: 5px;
+            border: 1px solid;
+            border-radius: 0px 5px 5px 0px;
+            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+            z-index: -1;
+            background-color: inherit;
+        }
     }
 }
