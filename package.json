@@ -11,10 +11,13 @@
     "normalize.css": "^5.0.0",
     "rivets": "^0.9.6",
     "sass-loader": "^4.1.1",
+    "surge": "^0.18.0",
     "webpack": "^2.2.0-rc.3"
   },
   "scripts": {
     "build": "webpack",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "deploy": "surge .",
+    "build+deploy": "npm run build && npm run deploy"
   }
 }
