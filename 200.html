@@ -34,12 +34,12 @@
     <div class="region" rv-each-region="regions" rv-show="regionSelected | equals region.id">
         <div class="title">{ region.title }</div>
         <div class="stream no-streams">
-            <div class="info">{ region.noStreamsText }</div>
+            <div class="info" rv-html="region.noStreamsText"></div>
         </div>
 
         <div class="stream" rv-each-stream="region.streams">
-            <div class="info">{ stream.info }</div>
-            <a rv-href="stream.url | https" target="_blank">
+            <div class="info" rv-html="stream.info | formatText"></div>
+            <a class="link" rv-href="stream.url | https" target="_blank">
                 { stream.name } - { stream.url }
             </a>
             <div class="score">{ stream.score.0 }:{ stream.score.1 }</div>
