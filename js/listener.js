@@ -72,8 +72,16 @@ view.update({
                 }
             }
 
-            //Update array values with splice so rivets recognizes them
-            regions.splice(regionIndex, 1, updatedRegion);
+            regions[regionIndex] = updatedRegion;
+
+            //Sort also makes rivets check if the array values are still up to date
+            regions.sort((a, b) => {
+                if (a.id === b.id) {
+                    return 0;
+                }
+
+                return a.id < b.id ? -1 : 1
+            });
         }
     });
 
