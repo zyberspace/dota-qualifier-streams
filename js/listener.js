@@ -81,16 +81,15 @@ view.update({
 
             //Update region
             regions[regionIndex] = updatedRegion;
-
-            //Sort also makes rivets check if the array values are still up to date
-            regions.sort((a, b) => {
-                if (a.id === b.id) {
-                    return 0;
-                }
-
-                return a.id < b.id ? -1 : 1
-            });
         }
+
+        //Make sure regions are sorted correctly (also makes rivets recognize the changes)
+        regions.sort((a, b) => {
+            if (a.id === b.id) {
+                return 0;
+            }
+            return a.id < b.id ? -1 : 1
+        });
     });
 
     listener.addEventListener("page-viewers-update", event => {
