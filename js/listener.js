@@ -56,12 +56,10 @@ view.update({
         let updatedRegions = JSON.parse(event.data);
         for (const regionId in updatedRegions) {
             let updatedRegion = updatedRegions[regionId];
-            //Add id to region object
-            updatedRegion.id = regionId;
 
             //Check if we already have a region with this id
             let regionIndex = regions.findIndex(region => {
-                return region.id === updatedRegion.id;
+                return region.id === regionId;
             });
             if (regionIndex < 0) {
                 regionIndex = regions.length;
@@ -72,6 +70,16 @@ view.update({
                 }
             }
 
+            //Remove region if it is null
+            if (updatedRegion === null) {
+                regions.splice(regionIndex, 1);
+                continue;
+            }
+
+            //Add id to region object
+            updatedRegion.id = regionId;
+
+            //Update region
             regions[regionIndex] = updatedRegion;
 
             //Sort also makes rivets check if the array values are still up to date
