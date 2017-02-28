@@ -1,6 +1,7 @@
 .region {
     text-align: center;
     margin-top: 20px;
+    padding: 0px 28px; // 36px / 2 + 10px; 36px -> .score, 10px -> space to the sides
 
     .title {
         font-weight: bold;
@@ -23,7 +24,6 @@
     .stream {
         position: relative;
         left: -18px;
-        width: calc(90% - 36px);
         max-width: 500px;
         margin: 20px auto;
         text-align: center;
