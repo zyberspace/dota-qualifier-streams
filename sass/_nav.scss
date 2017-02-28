@@ -1,17 +1,13 @@
 nav {
-    .page-viewers {
-        float: right;
-        padding: 3px;
-        font-size: 60%;
-        color: #444;
-    }
+    max-width: 800px;
+    margin: 0px auto;
+    text-align: center;
 
     ul {
-        width: 90%;
-        max-width: 536px;
-        margin: 0px auto;
+        display: inline-block;
         list-style: none;
-        padding: 5px 0px;
+        margin: 0px;
+        padding: 5px 10px;
 
         li {
             display: inline;
