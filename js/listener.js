@@ -85,10 +85,7 @@ view.update({
 
         //Make sure regions are sorted correctly (also makes rivets recognize the changes)
         regions.sort((a, b) => {
-            if (a.id === b.id) {
-                return 0;
-            }
-            return a.id < b.id ? -1 : 1
+            return a.orderId - b.orderId;
         });
     });
 
