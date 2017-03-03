@@ -1,5 +1,6 @@
 import view from "./view";
 
+let failedServers = [];
 let regions = [];
 export let hooks = {
     onNewRegionId: null
@@ -12,21 +13,62 @@ view.update({
     "regions": regions
 });
 
-(function createListener() {
+connectToEventServer();
+
+function connectToEventServer(failedServer) {
+    if (failedServer) {
+        console.log("Server failed:", failedServer);
+        failedServers.push(failedServer);
+    }
+
     //In case page / tab is not visible, wait till it is
     if (document.hidden) {
         document.addEventListener("visibilitychange", function eventListener() {
             document.removeEventListener("visibilitychange", eventListener);
-            createListener();
+            connectToEventServer();
         });
         return;
     }
 
+    getServers((servers) => {
+        let nonFailedServers = servers.filter(server => {
+            return !failedServers.includes(server);
+        });
+
+        if (nonFailedServers.length === 0) {
+            //No non failed servers left, let's reset and try again
+            failedServers.splice(0);
+            nonFailedServers = servers;
+        }
+
+        //Connect to a random non failed server
+        createListener(nonFailedServers[Math.floor(Math.random() * nonFailedServers.length)]);
+    });
+};
+
+function getServers(callback) {
+    var oReq = new XMLHttpRequest();
+    oReq.addEventListener("load", function() {
+        callback(JSON.parse(this.responseText));
+    });
+    oReq.open("GET", "https://s3.eu-central-1.amazonaws.com/oracle-hub/server-list.json");
+    oReq.send();
+}
+
+function createListener(server) {
     //Initiate EventSource object
-    let listener = new EventSource("https://jewel.zyberware.org:3220/");
+    let listener = new EventSource(server);
+
+    //Try another server if we can't get a connection after 5 seconds
+    let connectionTimeout = setTimeout(() => {
+        listener.close();
+        connectToEventServer(server);
+    }, 5000);
 
     listener.onopen = event => {
         console.log("Connected to EventSource stream. readyState === ", listener.readyState);
+        clearTimeout(connectionTimeout);
+
         view.update({
             "connecting": false
         });
@@ -40,6 +82,8 @@ view.update({
     };
     listener.onerror = event => {
         console.log("Error with EventSource stream. readyState === ", listener.readyState);
+        clearTimeout(connectionTimeout);
+
         view.update({
             "connecting": true
         });
@@ -47,7 +91,7 @@ view.update({
         if (listener.readyState === 2) { //CLOSED
             //Manually retry after 3 seconds because firefox has problems with this
             listener.close();
-            setTimeout(() => createListener(), 3000);
+            setTimeout(() => connectToEventServer(server), 3000);
         }
     };
 
@@ -94,4 +138,4 @@ view.update({
             "page-viewers": event.data
         });
     });
-})();
+}
