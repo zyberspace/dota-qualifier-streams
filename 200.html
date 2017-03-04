@@ -17,9 +17,7 @@
         <div class="connection-indicator"></div>
     </div>
 
-    <div class="page-viewers" rv-if="page-viewers">{ page-viewers } people connected</div>
-
-    <nav>
+    <nav rv-hide="regions | isEmpty">
         <ul>
             <li rv-each-region="regions">
                 <a rv-href="region.id" rv-data-region-id="region.id"
@@ -29,6 +27,8 @@
             </li>
         </ul>
     </nav>
+
+    <div class="page-viewers" rv-if="page-viewers">{ page-viewers } people connected</div>
 
     <div class="region" rv-each-region="regions" rv-show="regionSelected | equals region.id">
         <div class="title">{ region.title }</div>

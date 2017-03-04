@@ -1,6 +1,7 @@
 import rivets from "rivets";
 
 rivets.formatters.https = value => "https://" + value;
+rivets.formatters.isEmpty = value => !value || value.length === 0;
 rivets.formatters.equals = (value1, value2) => value1 === value2;
 rivets.formatters.formatText = value => {
     if (value === "") {
