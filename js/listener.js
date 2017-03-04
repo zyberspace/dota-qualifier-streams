@@ -3,7 +3,7 @@ import view from "./view";
 let failedServers = [];
 let regions = [];
 export let hooks = {
-    onNewRegionId: null
+    onStreamsUpdate: null
 };
 
 //Set start values
@@ -108,10 +108,6 @@ function createListener(server) {
             if (regionIndex < 0) {
                 regionIndex = regions.length;
                 regions.push(null);
-
-                if (typeof hooks.onNewRegionId === "function") {
-                    hooks.onNewRegionId(regionId);
-                }
             }
 
             //Remove region if it is null
@@ -131,6 +127,10 @@ function createListener(server) {
         regions.sort((a, b) => {
             return a.orderId - b.orderId;
         });
+
+        if (typeof hooks.onStreamsUpdate === "function") {
+            hooks.onStreamsUpdate(regions);
+        }
     });
 
     listener.addEventListener("page-viewers-update", event => {

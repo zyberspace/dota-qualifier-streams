@@ -1,29 +1,52 @@
 import view from "./view";
 import {hooks} from "./listener";
 
-//Register default region and switch function
+let regionSelected = false;
+
+function selectRegion(regionId) {
+    regionSelected = regionId;
+    view.update({
+        "regionSelected": regionSelected
+    });
+
+    history.replaceState({}, "", regionId);
+}
+
+function findRegionById(regionId) {
+    return region => region.id === regionId;
+}
+
+//Register switch function and set regionSelected to false till we got the regions from the server
 view.update({
-    "regionSelected": "europe",
+    "regionSelected": regionSelected,
     "switchRegion": event => {
         event.preventDefault();
         event.target.blur();
-        let regionId = event.target.dataset.regionId;
-        view.update({
-            "regionSelected": regionId
-        });
-
-        history.replaceState({}, "", regionId);
+        selectRegion(event.target.dataset.regionId);
     }
 });
 
-//Extract regionId from path
-let pathRegionId = location.pathname.substr(location.pathname.lastIndexOf("/") + 1);
+//This gets called every time there is a "streams-update" event
+hooks.onStreamsUpdate = regions => {
+    //Check if the currently selected region still exists
+    if (regionSelected !== false && regions.find(findRegionById(regionSelected)) === undefined) {
+        regionSelected = false;
+    }
 
-//Wait for regions from EventSource stream
-hooks.onNewRegionId = regionId => {
-    if (regionId === pathRegionId) {
-        view.update({
-            "regionSelected": regionId
-        });
+    if (regionSelected === false) {
+        //Extract regionId from path
+        let pathRegionId = location.pathname.substr(location.pathname.lastIndexOf("/") + 1);
+
+        //Check if we have a region for this
+        let pathRegion = regions.find(findRegionById(pathRegionId));
+
+        //If we found one, select it
+        if (pathRegion) {
+            selectRegion(pathRegion.id);
+            return;
+        }
+
+        //Otherwise select the first region
+        selectRegion(regions[0].id);
     }
 };
