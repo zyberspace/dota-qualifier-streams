@@ -1,12 +1,9 @@
 import view from "./view";
 import {hooks} from "./listener";
 
-let regionSelected = false;
-
 function selectRegion(regionId) {
-    regionSelected = regionId;
     view.update({
-        "regionSelected": regionSelected
+        "regionSelected": regionId
     });
 
     history.replaceState({}, "", regionId);
@@ -18,7 +15,7 @@ function findRegionById(regionId) {
 
 //Register switch function and set regionSelected to false till we got the regions from the server
 view.update({
-    "regionSelected": regionSelected,
+    "regionSelected": false,
     "switchRegion": event => {
         event.preventDefault();
         event.target.blur();
@@ -28,6 +25,8 @@ view.update({
 
 //This gets called every time there is a "streams-update" event
 hooks.onStreamsUpdate = regions => {
+    let regionSelected = view.models.regionSelected;
+
     //Check if the currently selected region still exists
     if (regionSelected !== false && regions.find(findRegionById(regionSelected)) === undefined) {
         regionSelected = false;
