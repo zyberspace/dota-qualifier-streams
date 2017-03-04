@@ -1,7 +1,7 @@
 import view from "./view";
 
 let failedServers = [];
-let regions = [];
+export let regions = [];
 export let hooks = {
     onStreamsUpdate: null
 };

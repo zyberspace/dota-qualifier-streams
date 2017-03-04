@@ -28,7 +28,9 @@
         </ul>
     </nav>
 
-    <div class="page-viewers" rv-if="page-viewers">{ page-viewers } people connected</div>
+    <div class="page-viewers" rv-if="page-viewers" rv-hide="obsSettings.hidePageViewers">
+        { page-viewers } people connected
+    </div>
 
     <div class="region" rv-each-region="regions" rv-show="regionSelected | equals region.id">
         <div class="title">{ region.title }</div>
@@ -43,6 +45,42 @@
             </a>
             <div class="score">{ stream.score.0 }:{ stream.score.1 }</div>
         </div>
+    </div>
+
+    <div class="obs-menu" rv-show="showObsMenu" rv-on-change="updateObsSettings">
+        <h1>OBS Settings</h1>
+        <ul>
+            <li>
+                <input type="checkbox" id="obs-switch-regions" rv-checked="obsSettings.switchRegions">
+                <label for="obs-switch-regions">Automatically switch between regions</label>
+                <ul rv-show="obsSettings.switchRegions">
+                    <li>
+                        ...every <input type="number" rv-value="obsSettings.switchInterval" min="1"
+                            style="width:3em;"> seconds.
+                    </li>
+                    <li>
+                        <input type="radio" id="obs-settings-switch-by-list" name="obs-switch-by" value="list"
+                            rv-checked="obsSettings.switchRegionsBy">
+                        <label for="obs-settings-switch-by-list">Manually select regions</label>
+                        <ul rv-show="obsSettings.switchRegionsBy | equals 'list'"><li>
+                            <input type="text" rv-value="obsSettings.switchRegionsList"
+                                placeholder="north-america, europe, sea, ..."
+                                style="width:calc(100% - 20px)" />
+                        </li></ul>
+                    </li>
+                    <li>
+                        <input type="radio" id="obs-settings-switch-by-streams" name="obs-switch-by" value="streams"
+                            rv-checked="obsSettings.switchRegionsBy">
+                        <label for="obs-settings-switch-by-streams">All regions with streams</label>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <input type="checkbox" id="obs-hide-page-viewers" rv-checked="obsSettings.hidePageViewers">
+                <label for="obs-hide-page-viewers">Hide page viewers</label>
+            </li>
+        </ul>
+        <small>(Close by pressing O+B+S again)</small>
     </div>
 
     <script src="app.js"></script>

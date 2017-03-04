@@ -1,7 +1,7 @@
 import view from "./view";
 import {hooks} from "./listener";
 
-function selectRegion(regionId) {
+export function selectRegion(regionId) {
     view.update({
         "regionSelected": regionId
     });
