@@ -23,7 +23,7 @@ module.exports = {
     },
     plugins: [
         // Avoid publishing files when compilation fails
-        new webpack.NoErrorsPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
         // Minify output
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: true
