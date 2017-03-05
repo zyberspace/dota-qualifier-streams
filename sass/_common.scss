@@ -1,9 +1,11 @@
+@import "colors";
+
 html {
     min-height: 100%;
 }
 body {
-    color: #fff;
-    background: linear-gradient(to bottom, #1c2536, #08111a);
+    color: $text-color;
+    background: $body-background;
 }
 
 a {
