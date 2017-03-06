@@ -40,8 +40,8 @@
 
         <div class="stream" rv-each-stream="region.streams">
             <div class="info" rv-html="stream.info | formatText"></div>
-            <a class="link" rv-href="stream.url | https" target="_blank">
-                { stream.name } - { stream.url }
+            <a class="link" rv-href="stream.url | twitchUrl true" target="_blank">
+                { stream.name } - { stream.url | twitchUrl }
             </a>
             <div class="score">{ stream.score.0 }:{ stream.score.1 }</div>
         </div>

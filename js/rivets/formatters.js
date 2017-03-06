@@ -1,6 +1,19 @@
 import rivets from "rivets";
 
-rivets.formatters.https = value => "https://" + value;
+rivets.formatters.twitchUrl = (value, forLink = false) => {
+    const partsToTrim = ["http://", "https://", "www."];
+    for (const partToTrim of partsToTrim) {
+        if (value.startsWith(partToTrim)) {
+            value = value.substr(partToTrim.length);
+        }
+    }
+
+    if (forLink) {
+        value = "https://www." + value;
+    }
+
+    return value;
+}
 rivets.formatters.isEmpty = value => !value || value.length === 0;
 rivets.formatters.equals = (value1, value2) => value1 === value2;
 rivets.formatters.formatText = value => {
