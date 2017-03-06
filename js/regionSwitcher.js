@@ -45,7 +45,15 @@ hooks.onStreamsUpdate = regions => {
             return;
         }
 
-        //Otherwise select the first region
+        //Otherwise select the first region with streams
+        for (const region of regions) {
+            if (region.streams.length > 0) {
+                selectRegion(region.id);
+                return;
+            }
+        }
+
+        //If there are no regions with streams, select the first region
         selectRegion(regions[0].id);
     }
 };
