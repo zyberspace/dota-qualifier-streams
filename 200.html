@@ -29,10 +29,6 @@
         </ul>
     </nav>
 
-    <div class="page-viewers" rv-if="page-viewers" rv-hide="obsSettings.hidePageViewers">
-        { page-viewers } people connected
-    </div>
-
     <div class="region" rv-each-region="regions" rv-show="regionSelected | equals region.id">
         <div class="title">{ region.title }</div>
         <div class="stream no-streams">
@@ -75,10 +71,6 @@
                         <label for="obs-settings-switch-by-streams">All regions with streams</label>
                     </li>
                 </ul>
-            </li>
-            <li>
-                <input type="checkbox" id="obs-hide-page-viewers" rv-checked="obsSettings.hidePageViewers">
-                <label for="obs-hide-page-viewers">Hide page viewers</label>
             </li>
         </ul>
         <small>(Close by pressing O+B+S again)</small>

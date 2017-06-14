@@ -132,10 +132,4 @@ function createListener(server) {
             hooks.onStreamsUpdate(regions);
         }
     });
-
-    listener.addEventListener("page-viewers-update", event => {
-        view.update({
-            "page-viewers": event.data
-        });
-    });
 }

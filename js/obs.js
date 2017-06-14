@@ -7,9 +7,7 @@ const settings = JSON.parse(localStorage.getItem(storageKey)) || {
     switchRegions: false,
     switchInterval: 5,
     switchRegionsBy: "streams",
-    switchRegionsList: "",
-
-    hidePageViewers: false
+    switchRegionsList: ""
 };
 
 let switchRegionInterval;
