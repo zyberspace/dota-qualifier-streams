@@ -7,7 +7,9 @@ const settings = JSON.parse(localStorage.getItem(storageKey)) || {
     switchRegions: false,
     switchInterval: 5,
     switchRegionsBy: "streams",
-    switchRegionsList: ""
+    switchRegionsList: "",
+
+    hideTwitterButton: false
 };
 
 let switchRegionInterval;

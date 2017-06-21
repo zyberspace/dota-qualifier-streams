@@ -44,6 +44,12 @@
         </div>
     </div>
 
+    <footer rv-hide="obsSettings.hideTwitterButton">
+        <a href="https://twitter.com/Dota2Qualifiers" class="twitter-follow-button" data-dnt="true"
+            data-show-count="false"></a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </footer>
+
     <div class="obs-menu" rv-show="showObsMenu" rv-on-change="updateObsSettings">
         <h1>OBS Settings</h1>
         <ul>
@@ -71,6 +77,10 @@
                         <label for="obs-settings-switch-by-streams">All regions with streams</label>
                     </li>
                 </ul>
+            </li>
+            <li>
+                <input type="checkbox" id="obs-hide-twitter-button" rv-checked="obsSettings.hideTwitterButton">
+                <label for="obs-hide-twitter-button">Hide twitter button</label>
             </li>
         </ul>
         <small>(Close by pressing O+B+S again)</small>
