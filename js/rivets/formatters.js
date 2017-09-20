@@ -1,15 +1,20 @@
 import rivets from "rivets";
 
 rivets.formatters.twitchUrl = (value, forLink = false) => {
-    const partsToTrim = ["http://", "https://", "www."];
+    const partsToTrim = ["http://", "https://", "www.", "go."];
+    let goLink = false;
+
     for (const partToTrim of partsToTrim) {
         if (value.startsWith(partToTrim)) {
+            if (partToTrim === "go.") {
+                goLink = true;
+            }
             value = value.substr(partToTrim.length);
         }
     }
 
     if (forLink) {
-        value = "https://www." + value;
+        value = "https://" + (goLink === true ? "go" : "www") + "." + value;
     }
 
     return value;
