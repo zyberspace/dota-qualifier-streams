@@ -1,91 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Oracle Qualifier Hub for TI7</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Qualifier streams</title>
     <meta charset="utf-8">
-    <meta name="description" content="The Oracle Qualifier Hub shows you what streams and casters are currently streaming The International 7 open and regional qualifiers.">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Where can i watch the current dota 2 qualifiers? Which casters are live?">
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            font-family: Verdana, Arial;
+            line-height: 1.15;
+        }
+
+        /* Show loading info till react is loaded */
+        #qualifier-streams:empty:before {
+            content: "Loading...";
+        }
+    </style>
 </head>
 <body>
-    <div class="loading-div" rv-hide="true">
-        ...
-    </div>
-
-    <div class="connection-info" rv-class-show="connecting">
-        <div class="connection-text">{ connectingType }, please wait...</div>
-        <div class="connection-indicator"></div>
-    </div>
-
-    <nav rv-hide="regions | isEmpty">
-        <ul>
-            <li rv-each-region="regions">
-                <a rv-href="region.id" rv-data-region-id="region.id"
-                    rv-class-selected="regionSelected | equals region.id" rv-on-click="switchRegion">
-                    { region.title }
-                </a>
-            </li>
-        </ul>
-    </nav>
-
-    <div class="region" rv-each-region="regions" rv-show="regionSelected | equals region.id">
-        <div class="title">{ region.title }</div>
-        <div class="stream no-streams">
-            <div class="info" rv-html="region.noStreamsText"></div>
-        </div>
-
-        <div class="stream" rv-each-stream="region.streams">
-            <div class="info" rv-html="stream.info | formatText"></div>
-            <a class="link" rv-href="stream.url | twitchUrl true" target="_blank">
-                { stream.name } - { stream.url | twitchUrl }
-            </a>
-            <div class="score">{ stream.score.0 }:{ stream.score.1 }</div>
-        </div>
-    </div>
-
-    <footer rv-hide="obsSettings.hideTwitterButton">
-        <a href="https://twitter.com/Dota2Qualifiers" class="twitter-follow-button" data-dnt="true"
-            data-show-count="false"></a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    </footer>
-
-    <div class="obs-menu" rv-show="showObsMenu" rv-on-change="updateObsSettings">
-        <h1>OBS Settings</h1>
-        <ul>
-            <li>
-                <input type="checkbox" id="obs-switch-regions" rv-checked="obsSettings.switchRegions">
-                <label for="obs-switch-regions">Automatically switch between regions</label>
-                <ul rv-show="obsSettings.switchRegions">
-                    <li>
-                        ...every <input type="number" rv-value="obsSettings.switchInterval" min="1"
-                            style="width:3em;"> seconds.
-                    </li>
-                    <li>
-                        <input type="radio" id="obs-settings-switch-by-list" name="obs-switch-by" value="list"
-                            rv-checked="obsSettings.switchRegionsBy">
-                        <label for="obs-settings-switch-by-list">Manually select regions</label>
-                        <ul rv-show="obsSettings.switchRegionsBy | equals 'list'"><li>
-                            <input type="text" rv-value="obsSettings.switchRegionsList"
-                                placeholder="north-america, europe, sea, ..."
-                                style="width:calc(100% - 20px)" />
-                        </li></ul>
-                    </li>
-                    <li>
-                        <input type="radio" id="obs-settings-switch-by-streams" name="obs-switch-by" value="streams"
-                            rv-checked="obsSettings.switchRegionsBy">
-                        <label for="obs-settings-switch-by-streams">All regions with streams</label>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <input type="checkbox" id="obs-hide-twitter-button" rv-checked="obsSettings.hideTwitterButton">
-                <label for="obs-hide-twitter-button">Hide twitter button</label>
-            </li>
-        </ul>
-        <small>(Close by pressing O+B+S again)</small>
-    </div>
-
+    <div id="qualifier-streams"></div>
     <script src="app.js"></script>
 </body>
 </html>

@@ -1,0 +1,9 @@
+dataUrl: https://s3.eu-central-1.amazonaws.com/dota-qualifier-streams/
+dataFile: data.json
+iot:
+    #The IAM user only has permissions to subscribe and read data so it can be  public
+    accessKey: AKIAIT45OGJ2UR7F4NAA
+    secretKey: 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
+    region: eu-central-1
+    iotEndpoint: a3cyor3jylwtlf.iot.eu-central-1.amazonaws.com
+    topicPrefix: dota-qualifier-streams/

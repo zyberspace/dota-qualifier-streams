@@ -1,2 +1,7 @@
-js/
-sass/
+node_modules/
+src/
+CNAME
+Makefile
+package.json
+README.md
+webpack.config.js
