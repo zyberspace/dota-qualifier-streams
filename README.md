@@ -9,12 +9,15 @@ I never got to open source all previously used projects and am currently in the 
 
 This is the planned stack for the near future:
 
-  - A new minimal admin interface that simply makes api calls to lambda to change the json data file. Updates are retrieved via the same AWS IoT stream the main frontend site uses.
-  - A lambda function that gets called whenever the json data file gets changed and then publishes those changes to AWS IoT.
-  - The main static frontend site hosted on [oracle.surge.sh](https://oracle.surge.sh) where everyone can see the current qualifier streams. The new site "flow" will be as follows:
+  - A json data file hosted on Amazon S3 that contains the current streams and maybe some site config. The file contains a special `_version` key which increases with every version so clients can make sure they are in sync.
+  - A public AWS IoT topic / stream from which subscribed clients retrieve changes made to the json data file. The update messages are basically [JSON Merge patches](https://tools.ietf.org/html/rfc7396), just that our version also allows us to partially update arrays. See [`mergePatch.js` in `oracle.surge.sh`](oracle.surge.sh/src/mergePatch.js) for more information.
+  - A set of lambda functions available through Amazon API Gateway to update the json data file and publish the changes to AWS IoT.
+  - A new minimal admin interface that allows you to add and delete streams through the lambda functions above. Updates are retrieved via the AWS IoT stream.
+  - And finally the main static site hosted on [oracle.surge.sh](https://oracle.surge.sh) where everyone can see the current qualifier streams. The site flow will be as follows:
     - Wait till the javascript is loaded.
-    - Load the streams from a json file hosted on S3.
-    - At the same time, connect to a AWS IoT pubsub stream via secured websockets.
-    - Update the streams on the site whenever we receive new data through AWS IoT
+    - Load the json data file containing the streams and display them.
+    - At the same time, connect to the AWS IoT stream.
+    - Update the streams on the site whenever we receive changes through AWS IoT.
+      - If the updated `_version` key doesn't match our current version, load the json data file again from S3 for a full update.
 
 Before i found out that i can [use](https://serverless.com/blog/serverless-notifications-on-aws/) AWS IoT for this kind of thing i used another project which was providing an [Event Source Server](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) that got the streams from the old redis pubsub and could be deployed on as many physical servers as needed for scaling purpose. It was the previous data source for [oracle.surge.sh](https://oracle.surge.sh). If someone needs the source for this just send me a mail to the address in my profile. I may publish it as open source one day but it's really just a nodejs http server that redirects the messages it retrieves via redis pubsub to all connected event source clients.
