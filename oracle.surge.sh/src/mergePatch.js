@@ -17,6 +17,10 @@
  *       "2": {...} <-- new indexes to add elements
  *     }
  *   }
+ *
+ * Deleting array values works by setting them to `null` in the patch (just as RFC7396 does for objects).
+ * We then `delete` the values in the target array which sets them to `undefined`.
+ * As last step all array values which are `undefined` get simply filtered out so they are finally removed.
  */
 export default function mergePatch(target, patch) {
     for (const key in patch) {
