@@ -1,0 +1,31 @@
+service: dota-qualifier-streams
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: v1
+  region: eu-central-1
+  apiKeys:
+    - ${self:provider.stage}-dev-key
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:PutObject"
+        - "s3:PutObjectAcl"
+      Resource: "arn:aws:s3:::dota-qualifier-streams/data.json"
+    - Effect: "Allow"
+      Action:
+        - "iot:Publish"
+      Resource: "arn:aws:iot:eu-central-1:130448155460:topic/dota-qualifier-streams/data.json"
+
+functions:
+  fullUpdate: #Dev function to make a full update, requires an api key
+    handler: handler.fullUpdate
+    events:
+      - http:
+          path: full-update
+          method: post
+          cors: true
+          private: true
+    memorySize: 128
+    timeout: 10

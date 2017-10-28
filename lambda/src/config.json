@@ -1,0 +1,5 @@
+{
+    "iotEndpoint": "a3cyor3jylwtlf.iot.eu-central-1.amazonaws.com",
+    "bucketName": "dota-qualifier-streams",
+    "key": "data.json"
+}
