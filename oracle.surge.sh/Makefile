@@ -1,3 +1,4 @@
+SHELL := /bin/bash
 export PATH := ./node_modules/.bin:$(PATH)
 
 default: install build
