@@ -33,7 +33,14 @@ export default function mergePatch(target, patch) {
             if (typeof target[key] !== "object") {
                 target[key] = {};
             }
+
             mergePatch(target[key], value);
+
+            //If target[key] is an array, filter undefined (aka removed with ´delete`) values
+            if (Array.isArray(target[key])) {
+                target[key] = target[key].filter(value => value !== undefined);
+            }
+
             continue;
         }
 
