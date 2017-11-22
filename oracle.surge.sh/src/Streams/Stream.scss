@@ -1,8 +1,9 @@
+@import "_centered.scss";
+
 .stream {
-    margin: 10px auto;
-    max-width: 500px;
-    border: 1px solid;
+    @extend %centered;
+
+    border-color: inherit;
     border-radius: 3px;
-    padding: 3px;
     text-align: center;
 }

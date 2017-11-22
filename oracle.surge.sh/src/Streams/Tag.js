@@ -23,11 +23,21 @@ function formatTagType(tagType) {
     }
 }
 
-export default ({ children }) => {
+function generateLink(tag, selectedTagsTmp) {
+    let selectedTags = selectedTagsTmp.slice(0);
+    if (!selectedTags.includes(tag)) {
+        selectedTags.push(tag);
+    }
+
+    return "#" + selectedTags.map(tag => encodeURIComponent(tag)).join("+");
+}
+
+export default ({ children, selectedTags }) => {
     const tagType = getTagType(children);
     return (
-        <span className="stream-tag" data-tag-type={tagType} title={formatTagType(tagType)}>
+        <a href={generateLink(children, selectedTags)} className="stream-tag" data-tag-type={tagType}
+            title={formatTagType(tagType)}>
             {children}
-        </span>
+        </a>
     )
 };

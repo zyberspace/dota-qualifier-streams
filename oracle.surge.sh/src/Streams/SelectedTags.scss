@@ -1,0 +1,26 @@
+@import "_centered";
+
+.selected-tags {
+    @extend %centered;
+
+    > div {
+        //Compensate for tag margin on first line and for padding and border from %centered
+        margin: -5px -4px;
+    }
+
+    a {
+        display: inline-block;
+        color: inherit;
+        text-decoration: inherit;
+        opacity: 0.5;
+
+        border: 1px solid;
+        border-radius: 3px;
+        padding: 3px;
+        margin-top: 5px;
+
+        &:hover {
+            text-decoration: line-through;
+        }
+    }
+}
