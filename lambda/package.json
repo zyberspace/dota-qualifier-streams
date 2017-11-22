@@ -1,6 +1,8 @@
 {
   "private": true,
   "dependencies": {
-    "bluebird": "^3.5.1"
+    "bluebird": "^3.5.1",
+    "js-yaml": "^3.10.0",
+    "node-fetch": "^1.7.3"
   }
 }

@@ -10,11 +10,26 @@ const iotData = Promise.promisifyAll(new AWS.IotData({
 
 const iotTopic = [bucketName, key].join("/");
 
+let dataCache;
+let dataCacheLastUpdate;
+
 const public = module.exports = {
-    get: () => s3.getObjectAsync({
-        Bucket: bucketName,
-        Key: key
-    }).then(objectData => JSON.parse(objectData.Body)),
+    get: () => {
+        if (dataCache && Date.now() - dataCacheLastUpdate <= 100) {
+            //Use data cache if something is cached and it is older than 100ms
+            return Promise.resolve(dataCache);
+        }
+
+        return s3.getObjectAsync({
+            Bucket: bucketName,
+            Key: key
+        }).then(objectData => JSON.parse(objectData.Body)).then(data => {
+            dataCache = data;
+            dataCacheLastUpdate = Date.now();
+
+            return data;
+        });
+    },
 
     update: updatedData => public.get().then(oldData => {
         const newData = Object.assign(
@@ -25,7 +40,11 @@ const public = module.exports = {
         );
         newData._version = oldData._version + 1; //Make sure we set the version and not the user
 
-        const patch =  generatePatch(oldData, newData);
+        const patch = generatePatch(oldData, newData);
+        if (Object.keys(patch).length === 1) {
+            //Dont do anything if only the version changed
+            return [];
+        }
 
         return Promise.all([
             s3.putObjectAsync({
@@ -42,5 +61,31 @@ const public = module.exports = {
                 payload: JSON.stringify(patch)
             })
         ]);
+    }),
+
+    updateStreams: updatedStreams => public.get().then(oldData => {
+        if (!Array.isArray(updatedStreams)) {
+            throw {
+                message: "Updated streams need to be an array!"
+            };
+        }
+
+        for (const stream of updatedStreams) {
+            if (typeof stream !== "object") {
+                throw {
+                    message: "Your updated streams json seems to be malformed. Every stream needs to be an object."
+                };
+            }
+        }
+
+        const data = Object.assign(
+            {},
+            oldData,
+            {
+                streams: updatedStreams.filter(stream => stream.link && stream.link.length > 0)
+            }
+        );
+
+        return public.update(data);
     })
 };
