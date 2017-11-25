@@ -30,6 +30,12 @@ function getTwitchUsers(token, twitchUserIds, twitchLoginNames) {
     });
 }
 
+//Define available roles
+const availableRoles = [
+    "admin",
+    "moderator"
+];
+
 //User object definition
 const buildUserObject = (twitchUserId, displayName, profileImageUrl, role) => ({
     twitchUserId,
@@ -90,5 +96,50 @@ module.exports = {
         }
 
         return users;
+    }),
+
+    updateOne: (token, { twitchUserId, role }) => Promise.try(() => {
+        if (typeof twitchUserId !== "string" || typeof role !== "string") {
+            throw {
+                message: "`twitchUserId` and `role` need to be defined and be a string!",
+                twitchUserId,
+                role
+            };
+        }
+
+        if (!availableRoles.includes(role)) {
+            throw {
+                message: "Unknown role!",
+                role,
+                availableRoles
+            };
+        }
+
+        //Check if twitch user exists
+        return getTwitchUsers(token, twitchUserId);
+    }).then(twitchUsers => {
+        if (twitchUsers.length === 0) {
+            throw {
+                message: `Twitch user with id ${twitchUserId} doesn't exist!`,
+                twitchUserId
+            };
+        }
+
+        const params = Object.assign({}, dynamoDbCommonParams, {
+            Item: {
+                "twitchUserId": {
+                    "N": twitchUserId
+                },
+                "role": {
+                    "S": role
+                }
+            }
+        });
+        delete params.ConsistentRead; //Not an available param for putItem
+
+        return dynamoDb.putItemAsync(params).catch(error => {
+            //AWS has it's error in the cause property
+            throw error.cause;
+        });
     })
 };
