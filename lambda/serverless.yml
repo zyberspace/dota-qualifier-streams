@@ -105,6 +105,6 @@ resources:
                 - dynamodb:GetItem
                 - dynamodb:PutItem
                 - dynamodb:Scan
-              Resource: arn:aws:dynamodb:eu-central-1:130448155460:table/dota-qualifier-streams-users
+              Resource: arn:aws:dynamodb:eu-central-1:130448155460:table/${self:resources.Resources.DynamoDbTable.Properties.TableName}
         Roles:
           - Ref: IamRoleLambdaExecution
