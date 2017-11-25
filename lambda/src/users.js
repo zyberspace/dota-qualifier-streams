@@ -141,5 +141,28 @@ module.exports = {
             //AWS has it's error in the cause property
             throw error.cause;
         });
+    }),
+
+    deleteOne: ({ twitchUserId }) => Promise.try(() => {
+        if (typeof twitchUserId !== "string") {
+            throw {
+                message: "`twitchUserId` needs to be defined and be a string!",
+                twitchUserId
+            };
+        }
+
+        const params = Object.assign({}, dynamoDbCommonParams, {
+            Key: {
+                "twitchUserId": {
+                    "N": twitchUserId
+                }
+            }
+        });
+        delete params.ConsistentRead; //Not an available param for deleteItem
+
+        return dynamoDb.deleteItemAsync(params).catch(error => {
+            //AWS has it's error in the cause property
+            throw error.cause;
+        });
     })
 };
