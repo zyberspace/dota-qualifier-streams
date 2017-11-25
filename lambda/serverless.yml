@@ -65,6 +65,19 @@ functions:
             resultTtlInSeconds: 300
             identitySource: method.request.header.Authorization
             type: token
+  getUsers:
+    handler: handler.getUsers
+    requireRole: admin
+    events:
+      - http:
+          path: users
+          method: get
+          cors: true
+          authorizer:
+            name: authorizer
+            resultTtlInSeconds: 300
+            identitySource: method.request.header.Authorization
+            type: token
 
 resources:
   Resources:
