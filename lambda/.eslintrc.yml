@@ -1,7 +1,11 @@
 env:
   es6: true
   node: true
-extends: 'eslint:recommended'
+plugins:
+    - require-path-exists
+extends:
+    - 'eslint:recommended'
+    - 'plugin:require-path-exists/recommended'
 rules:
   indent:
     - error
