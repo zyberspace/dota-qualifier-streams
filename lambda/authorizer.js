@@ -39,7 +39,8 @@ module.exports.authorize = (event, context, callback) => {
                     "twitchUserId": {
                         "N": twitchUserId
                     }
-                }
+                },
+                ConsistentRead: true
             })
         ]);
     }).then(([twitchUserData, twitchUserId, dynamoDbData]) => {
