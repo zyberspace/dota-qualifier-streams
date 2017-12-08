@@ -51,7 +51,7 @@ const public = module.exports = {
                 Bucket: bucketName,
                 Key: key,
                 Body: JSON.stringify(newData),
-                StorageClass: "STANDARD_IA",
+                StorageClass: "STANDARD",
                 CacheControl: "public, max-age=31536000, no-cache",
                 ContentType: "application/json",
                 ACL: "public-read"
