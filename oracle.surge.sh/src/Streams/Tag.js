@@ -36,7 +36,7 @@ export default ({ children, selectedTags }) => {
     const tagType = getTagType(children);
     return (
         <a href={generateLink(children, selectedTags)} className="stream-tag" data-tag-type={tagType}
-            title={formatTagType(tagType)}>
+            title={formatTagType(tagType)} onClick={event => event.target.blur()}>
             {children}
         </a>
     )
