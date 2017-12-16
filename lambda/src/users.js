@@ -30,7 +30,7 @@ function getTwitchUsers(token, twitchUserIds, twitchLoginNames) {
     });
 }
 
-//Define available roles
+//Define available roles (also gets used for sorting)
 const availableRoles = [
     "admin",
     "moderator"
@@ -94,6 +94,14 @@ module.exports = {
             user.displayName = twitchUser.display_name;
             user.profileImageUrl = twitchUser.profile_image_url;
         }
+
+        users.sort((userA, userB) => {
+            if (userA.role !== userB.role) {
+                return availableRoles.indexOf(userA.role) - availableRoles.indexOf(userB.role);
+            }
+
+            return userA.twitchUserId - userB.twitchUserId;
+        });
 
         return users;
     }),
