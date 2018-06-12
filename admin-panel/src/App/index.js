@@ -2,7 +2,7 @@ import React from "react";
 import { Grid } from "react-bootstrap";
 import Login from "./Login";
 import Navigation from "./Navigation";
-import DataLoader from "../../../oracle.surge.sh/src/DataLoader";
+import DataLoader from "../../../frontend/src/DataLoader";
 import Streams from "../components/Streams.js";
 
 import "bootstrap/dist/css/bootstrap.css";

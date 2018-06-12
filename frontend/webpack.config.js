@@ -1,18 +1,16 @@
 const path = require("path"),
       webpack = require("webpack"),
-      ExtractTextPlugin = require("extract-text-webpack-plugin");
+      ExtractTextPlugin = require("extract-text-webpack-plugin"),
+      HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const buildPath = path.resolve(__dirname, "build");
 const production = process.env["NODE_ENV"] === "production";
 
 const config = {
     entry: path.resolve(__dirname, "src", "index.js"),
     output: {
-        filename: "app.js"
-    },
-    devServer: {
-         historyApiFallback: {
-             index: "/200.html"
-         }
+        filename: "app.js",
+        path: buildPath
     },
     module: {
         rules: [
@@ -63,6 +61,10 @@ const config = {
         new ExtractTextPlugin({
             filename: "style.css",
             allChunks: true
+        }),
+        //Create html entry file
+        new HtmlWebpackPlugin({
+            template: "src/templates/index.html"
         })
     ],
     stats: {

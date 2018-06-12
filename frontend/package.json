@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "NODE_ENV=production webpack --progress --hide-modules",
+    "watch": "webpack-dev-server",
+    "deploy": "./scripts/deploy.sh"
+  },
+  "dependencies": {
+    "aws-iot-device-sdk": "^2.2.1",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^6.0.7",
+    "webpack": "^3.12.0",
+    "webpack-dev-server": "^2.11.2",
+    "yml-loader": "^2.1.0"
+  }
+}
