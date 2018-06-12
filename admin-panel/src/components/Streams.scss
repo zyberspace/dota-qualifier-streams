@@ -1,0 +1,49 @@
+$highlight-color: #aaa;
+$special-highlight-color: lighten($highlight-color, 25%);
+
+.streams {
+    @media (min-width: 768px) {
+        column-count: 2;
+        column-rule: solid 1px $highlight-color;
+        column-gap: 30px;
+    }
+
+    .stream {
+        display: inline-block;
+        width: 100%;
+        border: 1px solid $highlight-color;
+        border-radius: 3px;
+        padding: 0px 5px 0px 5px;
+        margin: 5px 0px;
+
+        .link {
+            color: invert($highlight-color);
+            background-color: $highlight-color;
+            font-weight: bold;
+            cursor: move;
+            padding: 2px;
+            margin: 0px -5px 5px -5px;
+
+            a.remove-link {
+                cursor: pointer;
+                color: lighten(invert($highlight-color), 10%);
+
+                //Avoid switching between the point and the move cursor at the link bar edges
+                margin: -2px;
+                padding: 2px;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 5px;
+        }
+
+        &.new {
+            border-color: $special-highlight-color;
+
+            .link {
+                background-color: $special-highlight-color;
+            }
+        }
+    }
+}

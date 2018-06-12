@@ -1,0 +1,31 @@
+$nav-text-color: #999;
+$nav-special-text-color: #000;
+
+nav {
+    margin-bottom: 20px;
+
+    .btn-link, .btn-link:hover {
+        color: $nav-text-color;
+    }
+    #user-menu, #user-menu:hover {
+        color: $nav-special-text-color;
+    }
+
+    .dropdown {
+        button {
+            img.avatar {
+                height: 30px;
+                margin: -7px 5px -7px 0px;
+                border-radius: 15px;
+            }
+        }
+
+        .dropdown-menu > li > span {
+            display: block;
+            cursor: default;
+            padding: 3px 20px;
+            color: $nav-text-color;
+            white-space: nowrap;
+        }
+    }
+}

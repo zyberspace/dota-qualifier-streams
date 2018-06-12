@@ -1,0 +1,31 @@
+a.loginButton {
+    //display: inline-block;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(calc(-50% - 0.2em), calc(-50% - 0.2em));
+
+    font-size: 35pt;
+    padding: 0.5em;
+    margin: 0.2em;
+    color: #fff;
+    background-color: #6441A4;
+    border-radius: 0.3em;
+
+    &:hover, &:focus, &:active {
+        color: #eee;
+        background-image: linear-gradient(135deg, rgba(0, 0, 0, 0), rgba(155, 155, 155, 0.1) 75%, rgba(0, 0, 0, 0.1));
+        text-decoration: none;
+
+        svg {
+            fill: #eee;
+        }
+    }
+
+    svg {
+        height: 1.15em;
+        margin-bottom: -0.2em;
+        fill: #fff;
+    }
+}
